@@ -50,21 +50,31 @@ namespace MVCIS.Controllers
             return View(person);
         }
 
+        //[HttpPost]
+        //public IActionResult EditPerson(IFormCollection data)
+        //{
+        //    var firstname = data["FirstName"];
+        //    var id = data["id"];
+
+        //    return RedirectToAction("Detail", new { id = id });
+        //}
+
+
         [HttpPost]
         public IActionResult EditPerson(Person person)
         {
             var existing = PersonDataset.People.FirstOrDefault(x => x.Id == person.Id);
-            
-            if(existing == null)
+
+            if (existing == null)
             {
                 return BadRequest();
             }
 
             existing.FirstName = person.FirstName;
-            existing.LastName  = person.LastName;
+            existing.LastName = person.LastName;
             existing.DateOfBirth = person.DateOfBirth;
 
-            return RedirectToAction("Detail",new {id = existing.Id});
+            return RedirectToAction("Detail", new { id = existing.Id });
         }
     }
 }
