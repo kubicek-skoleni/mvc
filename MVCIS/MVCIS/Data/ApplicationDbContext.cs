@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using MVCIS.Models;
 
 namespace MVCIS.Data
 {
@@ -9,5 +10,6 @@ namespace MVCIS.Data
             : base(options)
         {
         }
+        public DbSet<MVCIS.Models.Person>? Person { get; set; }
     }
 }

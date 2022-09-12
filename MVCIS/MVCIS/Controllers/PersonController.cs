@@ -24,5 +24,17 @@ namespace MVCIS.Controllers
             
             return View(person);
         }
+
+        public IActionResult Add()
+        {
+            return View();
+        }
+
+        [HttpPost("Add")]
+        public IActionResult AddPerson(Person person)
+        {
+
+            return View();
+        }
     }
 }
