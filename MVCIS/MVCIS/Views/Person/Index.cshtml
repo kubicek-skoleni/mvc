@@ -4,6 +4,8 @@
     ViewData["Title"] = "Seznam osob";
 }
 
+<a asp-action="Add">Nová..</a>
+
 @foreach (var person in Model)
 {
     <p><a asp-controller="Person" asp-action="Detail" asp-route-id="@person.Id"> @person.FirstName @person.LastName</a></p>    

@@ -30,11 +30,12 @@ namespace MVCIS.Controllers
             return View();
         }
 
-        [HttpPost("Add")]
+        [HttpPost]
         public IActionResult AddPerson(Person person)
         {
-
-            return View();
+            PersonDataset.AddPerson(person);
+            
+            return RedirectToAction("Index");
         }
     }
 }
