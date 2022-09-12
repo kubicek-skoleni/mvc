@@ -4,11 +4,7 @@
     ViewData["Title"] = "Seznam osob";
 }
 
-<p>@ViewData["Message"]</p>
-
-<p>@ViewBag.OsobaJmeno</p>
-
 @foreach (var person in Model)
 {
-    <p>@person.FirstName @person.LastName</p>    
+    <p><a asp-controller="Person" asp-action="Detail" asp-route-id="@person.Id"> @person.FirstName @person.LastName</a></p>    
 }
