@@ -1,0 +1,12 @@
+﻿@model Person
+
+@{
+    ViewData["Title"] = $"{Model.FirstName} {Model.LastName} - detail";
+}
+
+<div class="card card-body">
+    <p>@Model.FirstName</p>
+    <p>@Model.LastName</p>
+    <p>@Model.Email</p>
+    <p>@Model.DateOfBirth.ToShortDateString()</p>
+</div>

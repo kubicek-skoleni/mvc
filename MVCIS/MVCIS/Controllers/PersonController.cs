@@ -15,5 +15,14 @@ namespace MVCIS.Controllers
 
             return View(data);
         }
+
+        public IActionResult Detail(int id)
+        {
+            var person = PersonDataset.GetPeople()
+                        .Where(x => x.Id == id)
+                        .First();
+            
+            return View(person);
+        }
     }
 }

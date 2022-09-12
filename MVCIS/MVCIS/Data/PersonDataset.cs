@@ -13,6 +13,7 @@ namespace MVCIS.Data
             {
                 new Person()
                 {
+                    Id = 1,
                     FirstName = "Martin",
                     LastName = "Novák",
                     Email = "martin@novak.cz",
@@ -20,6 +21,7 @@ namespace MVCIS.Data
                 },
                 new Person()
                 {
+                    Id = 2,
                     FirstName = "Jana",
                     LastName = "Stará",
                     Email = "jana@email.cz",
