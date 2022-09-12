@@ -1,0 +1,17 @@
+﻿@{
+    ViewData["Title"] = "Privacy Policy";
+    bool show = true;
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<p>Dnes je @DateTime.Now.ToShortDateString()</p>
+
+@if(show)
+{
+    <p>Zobrazuji</p>
+} else
+{
+    <p>NEbrazuji</p>
+}
+
