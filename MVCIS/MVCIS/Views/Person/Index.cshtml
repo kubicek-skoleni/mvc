@@ -1,0 +1,14 @@
+﻿@model List<Person>
+
+@{
+    //ViewData["Message"] 
+}
+
+<p>@ViewData["Message"]</p>
+
+<p>@ViewBag.OsobaJmeno</p>
+
+@foreach (var person in Model)
+{
+    <p>@person.FirstName @person.LastName</p>    
+}
