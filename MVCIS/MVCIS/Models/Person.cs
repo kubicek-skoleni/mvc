@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MVCIS.Models
 {
@@ -21,5 +22,15 @@ namespace MVCIS.Models
         [Display(Name = "Datum narození")]
         [DataType(DataType.Date)]
         public DateTime DateOfBirth { get; set; }
+
+        [NotMapped]
+        public int Age
+        {
+            get
+            {
+                //zjednoduseny vypocet
+                return DateTime.Today.Year - DateOfBirth.Year;
+            }
+        }
     }
 }
