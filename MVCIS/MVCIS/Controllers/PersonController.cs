@@ -142,6 +142,8 @@ namespace MVCIS.Controllers
         [HttpPost("[Action]")]
         public IActionResult SearchResult(string email)
         {
+            ViewBag.Search = email;
+
             var result = _db.Persons.Where(x => x.Email.ToLower().Contains(email.ToLower())).ToList();
 
             return View(result);
