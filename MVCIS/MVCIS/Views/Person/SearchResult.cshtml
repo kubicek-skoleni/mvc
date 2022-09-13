@@ -1,0 +1,38 @@
+﻿@model List<Person>
+
+@{
+
+}
+
+<h3>Výsledek hledání podle emailu:</h3>
+
+<table class="table table-striped">
+    <tr>
+        <td>
+            jméno
+        </td>
+        <td>
+            příjmení
+        </td>
+        <td>
+            email
+        </td>
+    </tr>
+    @foreach (var person in Model)
+    {   
+        <tr>
+            <td>
+                @person.FirstName
+            </td>
+            <td>
+                @person.LastName
+            </td>
+            <td>
+                @person.Email
+            </td>
+        </tr>
+    }
+</table>
+
+
+<a asp-action="Search">Nové hledání</a>

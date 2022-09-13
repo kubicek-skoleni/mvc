@@ -125,5 +125,20 @@ namespace MVCIS.Controllers
 
             return RedirectToAction("Detail", new { id = person.Id });
         }
+
+        [Route("search")]
+        public IActionResult Search()
+        {
+            return View();
+        }
+
+        [HttpPost("[Action]")]
+        public IActionResult SearchResult(string email)
+        {
+            var result = _db.Persons.Where(x => x.Email.ToLower().Contains(email.ToLower())).ToList();
+
+            return View(result);
+        }
+
     }
 }
