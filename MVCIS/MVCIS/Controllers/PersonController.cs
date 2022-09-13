@@ -4,8 +4,16 @@ using MVCIS.Models;
 
 namespace MVCIS.Controllers
 {
+    //routovani
+    // https://docs.microsoft.com/en-us/aspnet/core/fundamentals/routing?view=aspnetcore-6.0
+    // https://docs.microsoft.com/en-us/aspnet/core/mvc/controllers/routing?view=aspnetcore-6.0
+    [Route("[Controller]")]
     public class PersonController : Controller
     {
+        [Route("[Action]")]
+        [Route("/osoby/list")]
+        [Route("")]
+        
         public IActionResult Index()
         {
             ViewData["Message"] = "Zobrazeni zpravy z ViewData";
@@ -16,21 +24,48 @@ namespace MVCIS.Controllers
             return View(data);
         }
 
-        public IActionResult Detail(int id)
-        {
-            var person = PersonDataset.GetPeople()
-                        .Where(x => x.Id == id)
-                        .First();
+        //[Route("Detail/{id?}")]
+        //public IActionResult Detail(int id)
+        //{
+        //    var person = PersonDataset.GetPeople()
+        //                .Where(x => x.Id == id)
+        //                .First();
             
+        //    return View(person);
+        //}
+
+        [Route("Detail")]
+        public IActionResult Detail(int? id, string? firstname, string? lastname)
+        {
+
+            var person = PersonDataset.GetPeople()
+                        .Where(x => x.FirstName == firstname && 
+                                    x.LastName == lastname)
+                        .First();
+
             return View(person);
         }
 
+        [Route("[Action]/first/{firstname}/last/{lastname}")]
+        public IActionResult Detail(string? firstname, string? lastname)
+        {
+
+            var person = PersonDataset.GetPeople()
+                        .Where(x => x.FirstName == firstname &&
+                                    x.LastName == lastname)
+                        .First();
+
+            return View(person);
+        }
+
+        [Route("[Action]")]
         public IActionResult Add()
         {
             return View();
         }
 
         [HttpPost]
+        [Route("[Action]")]
         public IActionResult AddPerson(Person person)
         {
             PersonDataset.AddPerson(person);
@@ -38,6 +73,7 @@ namespace MVCIS.Controllers
             return RedirectToAction("Index");
         }
 
+        [Route("[Action]")]
         public IActionResult Edit(int id)
         {
            
@@ -62,6 +98,7 @@ namespace MVCIS.Controllers
 
 
         [HttpPost]
+        [Route("[Action]")]
         public IActionResult EditPerson(Person person)
         {
             if (!ModelState.IsValid)
