@@ -95,6 +95,9 @@ namespace MVCIS.Controllers
         [Route("[Action]")]
         public IActionResult EditPerson(Person person)
         {
+            // disconnected entities - prijdou pres sit
+            //https://docs.microsoft.com/en-us/ef/core/saving/disconnected-entities
+
             if (!ModelState.IsValid)
                 return View("Edit", person);
             
