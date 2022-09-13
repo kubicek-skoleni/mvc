@@ -2,10 +2,17 @@
 
 @{
     ViewData["Title"] = "Add";
+    string ErrorMsg = ViewBag.ErrorMsg;
 }
 
 <h1>Add</h1>
 
+@if(!string.IsNullOrEmpty(ErrorMsg))
+{
+    <div class="alert alert-warning" role="alert">
+        @ErrorMsg
+    </div>
+}
 <h4>Person</h4>
 <hr />
 <div class="row">

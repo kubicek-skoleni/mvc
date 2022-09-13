@@ -62,6 +62,12 @@ namespace MVCIS.Controllers
             if (person == null)
                 return BadRequest();
 
+            if (!IsAgeValid(person))
+            {
+                ViewBag.ErrorMsg = "Osoba musí být plnoletá.";
+                return View("Add", person);
+            }
+
             _db.Persons.Add(person);
             _db.SaveChanges();
                         
@@ -81,16 +87,6 @@ namespace MVCIS.Controllers
             return View(person);
         }
 
-        //[HttpPost]
-        //public IActionResult EditPerson(IFormCollection data)
-        //{
-        //    var firstname = data["FirstName"];
-        //    var id = data["id"];
-
-        //    return RedirectToAction("Detail", new { id = id });
-        //}
-
-
         [HttpPost]
         [Route("[Action]")]
         public IActionResult EditPerson(Person person)
@@ -100,6 +96,12 @@ namespace MVCIS.Controllers
 
             if (!ModelState.IsValid)
                 return View("Edit", person);
+
+            if(!IsAgeValid(person))
+            {
+                ViewBag.ErrorMsg = "Osoba musí být plnoletá.";
+                return View("Edit", person);
+            }
             
             // 1. vytahnu z dbContextu a priradim hodnoty z prichozi
             var existing = _db.Persons.FirstOrDefault(x => x.Id == person.Id);
@@ -124,6 +126,11 @@ namespace MVCIS.Controllers
             _db.SaveChanges();
 
             return RedirectToAction("Detail", new { id = person.Id });
+        }
+
+        private bool IsAgeValid(Person person)
+        {
+            return person.Age > 18;
         }
 
         [Route("search")]
