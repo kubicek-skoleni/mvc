@@ -40,6 +40,7 @@ namespace MVCIS.Controllers
 
         public IActionResult Edit(int id)
         {
+           
             var person = PersonDataset.People.FirstOrDefault(x => x.Id == id);
 
             if(person == null)
@@ -63,6 +64,10 @@ namespace MVCIS.Controllers
         [HttpPost]
         public IActionResult EditPerson(Person person)
         {
+            if (!ModelState.IsValid)
+            {
+                return View("Edit", person);
+            }
             var existing = PersonDataset.People.FirstOrDefault(x => x.Id == person.Id);
 
             if (existing == null)
@@ -73,6 +78,7 @@ namespace MVCIS.Controllers
             existing.FirstName = person.FirstName;
             existing.LastName = person.LastName;
             existing.DateOfBirth = person.DateOfBirth;
+            existing.Email = person.Email;
 
             return RedirectToAction("Detail", new { id = existing.Id });
         }
