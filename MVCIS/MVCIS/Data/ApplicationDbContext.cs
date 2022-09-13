@@ -10,6 +10,8 @@ namespace MVCIS.Data
             : base(options)
         {
         }
-        public DbSet<MVCIS.Models.Person>? Person { get; set; }
+
+        public DbSet<Person> Persons { get; set; }
+        
     }
 }
