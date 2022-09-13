@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using MVCIS.Data;
 using MVCIS.Models;
 using MVCIS.Services;
@@ -13,9 +14,11 @@ namespace MVCIS.Controllers
     public class PersonController : Controller
     {
         private readonly SimpleLogger _logger;
-        public PersonController(SimpleLogger log)
+        private readonly ApplicationDbContext _db;
+        public PersonController(SimpleLogger log, ApplicationDbContext db)
         {
             _logger = log;
+            _db = db;
         }
 
         [Route("[Action]")]
@@ -23,42 +26,28 @@ namespace MVCIS.Controllers
         [Route("")]
         public IActionResult Index()
         {
-            ViewData["Message"] = "Zobrazeni zpravy z ViewData";
-            ViewBag.OsobaJmeno = "Pavel";
-
-            List<Person> data = PersonDataset.GetPeople();
+            List<Person> data = _db.Persons.ToList();
 
             return View(data);
 
         }
 
-        //[Route("Detail/{id?}")]
-        //public IActionResult Detail(int id)
-        //{
-        //    var person = PersonDataset.GetPeople()
-        //                .Where(x => x.Id == id)
-        //                .First();
-            
-        //    return View(person);
-        //}
-
-        [Route("Detail")]
-        public IActionResult Detail(int? id, string? firstname, string? lastname)
+        [Route("Detail/{id}")]
+        public IActionResult Detail(int id)
         {
-
-            var person = PersonDataset.GetPeople()
-                        .Where(x => x.FirstName == firstname && 
-                                    x.LastName == lastname)
+            var person = _db.Persons
+                        .Where(x => x.Id == id)
                         .First();
 
             return View(person);
         }
+               
 
         [Route("[Action]/first/{firstname}/last/{lastname}")]
         public IActionResult Detail(string? firstname, string? lastname)
         {
 
-            var person = PersonDataset.GetPeople()
+            var person = _db.Persons
                         .Where(x => x.FirstName == firstname &&
                                     x.LastName == lastname)
                         .First();
@@ -76,16 +65,19 @@ namespace MVCIS.Controllers
         [Route("[Action]")]
         public IActionResult AddPerson(Person person)
         {
-            PersonDataset.AddPerson(person);
-            
+            if (person == null)
+                return BadRequest();
+
+            _db.Persons.Add(person);
+            _db.SaveChanges();
+                        
             return RedirectToAction("Index");
         }
 
         [Route("[Action]/{id}")]
         public IActionResult Edit(int id)
         {
-           
-            var person = PersonDataset.People.FirstOrDefault(x => x.Id == id);
+           var person = _db.Persons.FirstOrDefault(x => x.Id == id);
 
             if(person == null)
             {
@@ -111,22 +103,31 @@ namespace MVCIS.Controllers
         public IActionResult EditPerson(Person person)
         {
             if (!ModelState.IsValid)
-            {
                 return View("Edit", person);
-            }
-            var existing = PersonDataset.People.FirstOrDefault(x => x.Id == person.Id);
+            
+            // 1. vytahnu z dbContextu a priradim hodnoty z prichozi
+            var existing = _db.Persons.FirstOrDefault(x => x.Id == person.Id);
 
             if (existing == null)
-            {
                 return BadRequest();
-            }
 
             existing.FirstName = person.FirstName;
             existing.LastName = person.LastName;
             existing.DateOfBirth = person.DateOfBirth;
             existing.Email = person.Email;
 
-            return RedirectToAction("Detail", new { id = existing.Id });
+            // 2. NEBO predam celou prichozi instanci (odpojenou, napojim)
+            //_db.Attach(person);
+            //_db.Entry(person).State = EntityState.Modified;
+            //_db.Entry(person).Property(p => p.Name).IsModified = true;
+
+            // 3. NEBO aktualizovat vsechny pomoci metody setValues
+            //_db.Entry<Person>(existing).CurrentValues.SetValues(person);
+
+            // ULOZ do db
+            _db.SaveChanges();
+
+            return RedirectToAction("Detail", new { id = person.Id });
         }
     }
 }
