@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using MVCIS.Data;
+using MVCIS.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,7 +16,10 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<ApplicationDbContext>();
 
+builder.Services.AddSingleton<SimpleLogger>();
+
 builder.Services.AddControllersWithViews();
+
 
 
 

@@ -1,19 +1,26 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MVCIS.Data;
 using MVCIS.Models;
+using MVCIS.Services;
 
 namespace MVCIS.Controllers
 {
     //routovani
     // https://docs.microsoft.com/en-us/aspnet/core/fundamentals/routing?view=aspnetcore-6.0
     // https://docs.microsoft.com/en-us/aspnet/core/mvc/controllers/routing?view=aspnetcore-6.0
+
     [Route("[Controller]")]
     public class PersonController : Controller
     {
+        private readonly SimpleLogger _logger;
+        public PersonController(SimpleLogger log)
+        {
+            _logger = log;
+        }
+
         [Route("[Action]")]
         [Route("/osoby/list")]
         [Route("")]
-        
         public IActionResult Index()
         {
             ViewData["Message"] = "Zobrazeni zpravy z ViewData";
@@ -22,6 +29,7 @@ namespace MVCIS.Controllers
             List<Person> data = PersonDataset.GetPeople();
 
             return View(data);
+
         }
 
         //[Route("Detail/{id?}")]
@@ -73,7 +81,7 @@ namespace MVCIS.Controllers
             return RedirectToAction("Index");
         }
 
-        [Route("[Action]")]
+        [Route("[Action]/{id}")]
         public IActionResult Edit(int id)
         {
            
@@ -81,6 +89,7 @@ namespace MVCIS.Controllers
 
             if(person == null)
             {
+                _logger.Log($"nenalezena osoba s id{id}");
                 return NotFound();
             }
 
