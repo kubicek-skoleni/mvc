@@ -22,14 +22,11 @@ namespace MVCIS.Controllers
         }
 
         [Route("[Action]")]
-        [Route("/osoby/list")]
         [Route("")]
         public IActionResult Index()
         {
             List<Person> data = _db.Persons.ToList();
-
             return View(data);
-
         }
 
         [Route("Detail/{id}")]
@@ -38,7 +35,6 @@ namespace MVCIS.Controllers
             var person = _db.Persons
                         .Where(x => x.Id == id)
                         .First();
-
             return View(person);
         }
                
@@ -46,12 +42,10 @@ namespace MVCIS.Controllers
         [Route("[Action]/first/{firstname}/last/{lastname}")]
         public IActionResult Detail(string? firstname, string? lastname)
         {
-
             var person = _db.Persons
                         .Where(x => x.FirstName == firstname &&
                                     x.LastName == lastname)
                         .First();
-
             return View(person);
         }
 
@@ -64,7 +58,7 @@ namespace MVCIS.Controllers
         [HttpPost]
         [Route("[Action]")]
         public IActionResult AddPerson(Person person)
-        {
+        { 
             if (person == null)
                 return BadRequest();
 
@@ -84,7 +78,6 @@ namespace MVCIS.Controllers
                 _logger.Log($"nenalezena osoba s id{id}");
                 return NotFound();
             }
-
             return View(person);
         }
 
