@@ -5,19 +5,22 @@
 }
 
 <h3>Výsledek hledání podle emailu:</h3>
-<div>hledaný výraz: @Html.Raw(search)</div>
+@* pozor na xss zranitelnost ;) *@
+<div>hledaný výraz: <mark>@Html.Raw(search)</mark></div>
 <table class="table table-striped">
-    <tr>
-        <td>
+    <thead>
+        <tr>
+        <th>
             jméno
-        </td>
-        <td>
+        </th>
+        <th>
             příjmení
-        </td>
-        <td>
+        </th>
+        <th>
             email
-        </td>
-    </tr>
+        </th>
+        </tr>
+    </thead>
     @foreach (var person in Model)
     {   
         <tr>
