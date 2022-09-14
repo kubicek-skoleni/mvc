@@ -1,3 +1,5 @@
+using ElmahCore;
+using ElmahCore.Mvc;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using MVCIS.Data;
@@ -20,6 +22,12 @@ builder.Services.AddSingleton<SimpleLogger>();
 
 builder.Services.AddControllersWithViews();
 
+builder.Services.AddElmah<XmlFileErrorLog>(options =>
+{
+    options.LogPath = "~/logs";
+    options.Path = "/errors";
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -41,6 +49,8 @@ app.UseRouting();
 
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.UseElmah();
 
 app.MapControllerRoute(
     name: "default",

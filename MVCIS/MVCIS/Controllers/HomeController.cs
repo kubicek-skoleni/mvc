@@ -39,6 +39,11 @@ namespace MVCIS.Controllers
             //return Content("ok");
         }
 
+        public IActionResult Ex()
+        {
+            throw new Exception("závažná chyba");
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
