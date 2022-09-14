@@ -27,21 +27,24 @@ namespace MVCIS.Controllers
         [Route("")]
         public IActionResult Index()
         {
-            List<Person> data = _db.Persons.ToList();
+            List<Person> data = _db.Persons.Take(100).ToList();
+             
             return View(data);
         }
 
         [Route("Detail/{id}")]
         [AllowAnonymous]
-
         public IActionResult Detail(int id)
         {
             var person = _db.Persons
+                    .Include(x => x.Constracts)
+                    .Include(x => x.Address)
                         .Where(x => x.Id == id)
                         .First();
             return View(person);
         }
-               
+
+        
 
         [Route("[Action]/first/{firstname}/last/{lastname}")]
         public IActionResult Detail(string? firstname, string? lastname)

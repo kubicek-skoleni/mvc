@@ -34,6 +34,8 @@ namespace MVCIS.Models
         }
 
         public Address? Address { get; set; }
-        public List<Contract> Constracts { get; set; }
+
+        // doporucene u koleci (navigacni property)
+        public ICollection<Contract> Constracts { get; set; } = new HashSet<Contract>();
     }
 }
