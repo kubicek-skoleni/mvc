@@ -32,5 +32,8 @@ namespace MVCIS.Models
                 return DateTime.Today.Year - DateOfBirth.Year;
             }
         }
+
+        public Address? Address { get; set; }
+        public List<Contract> Constracts { get; set; }
     }
 }
