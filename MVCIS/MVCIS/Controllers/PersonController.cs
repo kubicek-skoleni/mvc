@@ -71,7 +71,7 @@ namespace MVCIS.Controllers
             _db.Persons.Add(person);
             _db.SaveChanges();
                         
-            return RedirectToAction("Index");
+            return RedirectToAction("Detail",new {id = person.Id});
         }
 
         [Route("[Action]/{id}")]
