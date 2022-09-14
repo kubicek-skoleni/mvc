@@ -40,3 +40,17 @@
         }
     </tbody>
 </table>
+<div class="row">
+    @if (ViewBag?.Prev > 0)
+    {
+        <div class="col">
+            <a asp-action="Index" asp-route-page="@ViewBag.Prev">Předchozí</a>
+        </div>
+    }
+    @if (ViewBag?.ShowNext)
+    {
+        <div class="col">
+            <a asp-action="Index" asp-route-page="@ViewBag.Next">Další</a>
+    </div>
+    }
+</div>

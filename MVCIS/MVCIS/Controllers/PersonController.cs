@@ -25,10 +25,19 @@ namespace MVCIS.Controllers
 
         [Route("[Action]")]
         [Route("")]
-        public IActionResult Index()
+        public IActionResult Index(int? page)
         {
-            List<Person> data = _db.Persons.Take(100).ToList();
-             
+            page ??= 1;
+            page = Math.Max(page.Value, 1);
+            int from = (page.Value - 1) * 100;
+            int cnt = _db.Persons.Count();
+            int maxpage = (int)Math.Ceiling((double)(cnt / 100.0));
+
+            List<Person> data = _db.Persons.Skip(from).Take(100).ToList();
+
+            ViewBag.Next = page + 1;
+            ViewBag.Prev = page - 1;
+            ViewBag.ShowNext = page < maxpage;
             return View(data);
         }
 
