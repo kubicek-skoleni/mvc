@@ -3,10 +3,40 @@
 @{
     ViewData["Title"] = "Seznam osob";
 }
+<div class="m-2">
+    <a class="btn-info btn" asp-action="Add">Nová..</a>
+</div>
 
-<a asp-action="Add">Nová..</a>
-
-@foreach (var person in Model)
-{
-    <p><a asp-controller="Person" asp-action="Detail" asp-route-id="@person.Id"> @person.FirstName @person.LastName</a></p>    
-}
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Jméno</th>
+            <th scope="col">Příjmení</th>
+            <th scope="col">Email</th>
+            <th />
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var person in Model)
+        {
+            <tr>
+                <td>
+                    @person.Id
+                </td>
+                <td>
+                    @person.FirstName
+                </td>
+                <td>
+                    @person.LastName
+                </td>
+                <td>
+                    @person.Email
+                </td>
+                <td>
+                    <a class="btn-info btn" asp-action="Edit" asp-route-Id="@person.Id">Editovat</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
