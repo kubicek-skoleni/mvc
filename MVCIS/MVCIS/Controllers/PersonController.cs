@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MVCIS.Data;
 using MVCIS.Models;
@@ -11,6 +12,7 @@ namespace MVCIS.Controllers
     // https://docs.microsoft.com/en-us/aspnet/core/mvc/controllers/routing?view=aspnetcore-6.0
 
     [Route("[Controller]")]
+    [Authorize]
     public class PersonController : Controller
     {
         private readonly SimpleLogger _logger;
@@ -30,6 +32,8 @@ namespace MVCIS.Controllers
         }
 
         [Route("Detail/{id}")]
+        [AllowAnonymous]
+
         public IActionResult Detail(int id)
         {
             var person = _db.Persons
@@ -58,7 +62,14 @@ namespace MVCIS.Controllers
         [HttpPost]
         [Route("[Action]")]
         public IActionResult AddPerson(Person person)
-        { 
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                var login = User.Identity.Name;
+                _logger.Log($"uživatel {login} přidává Person{person.Email}");
+            }
+
+
             if (person == null)
                 return BadRequest();
 
