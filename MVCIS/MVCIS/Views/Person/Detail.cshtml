@@ -20,7 +20,11 @@
     <p>@Model?.Address?.ZipCode</p>
 </div>
 
+<div class="m-2">
+    <a class="btn-info btn" asp-controller="Contract" asp-action="Create" asp-route-personid="@Model.Id" >Přidat smlouvu..</a>
+</div>
+
 @foreach(var contract in Model.Constracts)
 {
-    <div>@contract.Name - @contract.Number - @contract.Signed - @contract.IsActive</div>
+    <div>@contract.Name - @contract.Number - @contract.Signed - @contract.IsActive <a class="text-danger danger" asp-controller="Contract" asp-action="Delete" asp-route-id="@contract.Id" asp-route-personid=@Model.Id>smazat</a></div>
 }
