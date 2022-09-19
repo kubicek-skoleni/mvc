@@ -7,4 +7,16 @@
 <div class="text-center">
     @*<h4 class="display-4">Počet osob v db:</h4>
     <div><strong>@Model.PersonCount</strong></div>*@
+
+    <h5>URL:</h5>
+    <p>@HttpContext.Request.Path</p>
+
+    <h5>IP:</h5>
+    <p>@HttpContext.Connection.RemoteIpAddress.MapToIPv4()</p>
+    
+
+    @foreach(var header in HttpContext.Request.Headers)
+    {
+        <div>@header.Key : @header.Value</div>
+    }
 </div>

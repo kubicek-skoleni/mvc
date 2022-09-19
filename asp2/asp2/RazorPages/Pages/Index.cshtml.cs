@@ -22,6 +22,11 @@ namespace RazorPages.Pages
             //return NotFound();
 
             //PersonCount = db.Persons.Count();
+
+            var pathbase = HttpContext.Request.PathBase;
+            var path = HttpContext.Request.Path;
+            var ip = HttpContext.Connection.RemoteIpAddress;
+
         }
     }
 }

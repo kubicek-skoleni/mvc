@@ -8,6 +8,8 @@ builder.Services.AddRazorPages();
 // database context
 builder.Services.AddDbContext<PersonsDbContext>();
 
+builder.Services.AddHttpContextAccessor();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
