@@ -27,7 +27,6 @@ namespace RazorPages.Pages
                     < 100 => "healthy",
                     >= 100 => "degraded",
                 };
-            
         }
     }
 }

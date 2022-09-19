@@ -21,7 +21,7 @@ namespace RazorPages.Pages
         {
             //return NotFound();
 
-            PersonCount = db.Persons.Count();
+            //PersonCount = db.Persons.Count();
         }
     }
 }
