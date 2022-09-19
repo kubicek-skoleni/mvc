@@ -19,6 +19,8 @@ namespace RazorPages.Pages
 
         public void OnGet()
         {
+            //return NotFound();
+
             PersonCount = db.Persons.Count();
         }
     }
