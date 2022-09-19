@@ -1,4 +1,5 @@
 using Data;
+using RazorPages.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,6 +10,7 @@ builder.Services.AddRazorPages();
 builder.Services.AddDbContext<PersonsDbContext>();
 
 builder.Services.AddHttpContextAccessor();
+
 
 var app = builder.Build();
 
@@ -22,6 +24,8 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
+
+app.UseLogRequestMiddleware();
 
 app.UseRouting();
 

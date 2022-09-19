@@ -23,6 +23,8 @@ namespace Data
         public virtual DbSet<Contracts> Contracts { get; set; }
         public virtual DbSet<Persons> Persons { get; set; }
 
+        public DbSet<LogRequest> LogRequests { get; set; }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=aspnet-MVCIS-0E5D8AF6-1B19-4FEC-948C-5A4131216F32;Trusted_Connection=True;MultipleActiveResultSets=true");
