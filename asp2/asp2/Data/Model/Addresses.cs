@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 using Microsoft.EntityFrameworkCore;
 
 namespace Data.Model
@@ -25,6 +26,7 @@ namespace Data.Model
         public string ZipCode { get; set; }
 
         [InverseProperty("Address")]
+        [JsonIgnore]
         public virtual ICollection<Persons> Persons { get; set; }
     }
 }

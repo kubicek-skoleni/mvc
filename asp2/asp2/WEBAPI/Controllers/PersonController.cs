@@ -32,6 +32,13 @@ namespace WEBAPI.Controllers
             return Created($"/person/detail/{person.Id}", person);
         }
 
+        [HttpGet("detail/{id:int}")]
+        public ActionResult<Persons> Detail(int id)
+        {
+            return db.Persons.Include(x => x.Address).Include(x => x.Contracts)
+                .FirstOrDefault(x => x.Id == id);
+        }
+
         [HttpGet("updatecity/sync/{amount}/{from}/{city}")]
         public ActionResult<IEnumerable<Persons>> GetListSync(int amount, int from, string city)
         {

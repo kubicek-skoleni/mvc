@@ -23,6 +23,7 @@ namespace Data.Model
 
         [ForeignKey("PersonId")]
         [InverseProperty("Contracts")]
+        [JsonIgnore]
         public virtual Persons Person { get; set; }
     }
 }
