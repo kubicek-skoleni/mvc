@@ -8,6 +8,7 @@ namespace WEBAPI.Controllers
     {
 
         [HttpGet("sync")]
+        [ResponseCache(Duration = 10)]
         public ActionResult<int> ReadSync()
         {
             var lines = System.IO.File.ReadAllLines(@"C:\skoleni\github\mvc\words01.txt");
