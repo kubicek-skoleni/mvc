@@ -3,6 +3,9 @@ using Data.Model;
 using Microsoft.EntityFrameworkCore;
 using MinimalAPI;
 
+// Minimal APIs at a glance:
+// https://gist.github.com/davidfowl/ff1addd02d239d2d26f4648a06158727
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
