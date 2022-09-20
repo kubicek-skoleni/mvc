@@ -20,7 +20,7 @@ namespace WEBAPI.Controllers
         [HttpGet("list")]
         public ActionResult<IEnumerable<Persons>> List()
         {
-            return db.Persons.Take(100).ToList();
+            return db.Persons.AsNoTracking().Take(100).ToList();
         }
 
         [HttpPost("add")]
