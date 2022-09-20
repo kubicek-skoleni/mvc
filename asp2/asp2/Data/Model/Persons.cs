@@ -32,7 +32,7 @@ namespace Data.Model
 
         [ForeignKey("AddressId")]
         [InverseProperty("Persons")]
-        public virtual Addresses Address { get; set; }
+        public virtual Addresses? Address { get; set; }
         [InverseProperty("Person")]
         public virtual ICollection<Contracts> Contracts { get; set; }
     }
