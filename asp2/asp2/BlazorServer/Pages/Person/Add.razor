@@ -5,19 +5,18 @@
 
 <h3>Přidej novou osobu</h3>
 
-@*@if(!string.IsNullOrEmpty(ErrorMsg))
+@if(!string.IsNullOrEmpty(ErrorMsg))
 {
-    <div class="alert alert-warning" role="alert">
-        @ErrorMsg
+    <div class="alert alert-error bg-danger" role="alert">
+        @((MarkupString)ErrorMsg)
     </div>
-}*@
+}
 
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <EditForm Model="@Person" OnValidSubmit="@ValidSubmit" >
-            <DataAnnotationsValidator />
-            <ValidationSummary />
+        <EditForm Model="@Person" OnSubmit="Submit" >
+            
             <div class="form-group">
                 <label class="control-label">
                     Jméno:
@@ -51,6 +50,8 @@
 
 
 @code {
+    string ErrorMsg = "";
+
     Persons Person = new Persons(){DateOfBirth = DateTime.Today};
 
     void ValidSubmit()
@@ -58,6 +59,28 @@
         db.Persons.Add(Person);
         db.SaveChanges();
         navigationManager.NavigateTo($"/person/detail/{Person.Id}", true);
+    }
+
+    void Submit()
+    {
+        ErrorMsg = "";
+
+        if (string.IsNullOrEmpty(Person.FirstName))
+            ErrorMsg += "Jméno je prázdné <br/>"; 
+
+        if (string.IsNullOrEmpty(Person.LastName))
+            ErrorMsg += "Příjmení je prázdné <br/>"; 
+
+        if (Person.Age() <= 18)
+            ErrorMsg += "Osoba není plnoletá <br/>"; 
+
+        if(string.IsNullOrEmpty(ErrorMsg))
+        {
+            //ukladam
+             db.Persons.Add(Person);
+            db.SaveChanges();
+            navigationManager.NavigateTo($"/person/detail/{Person.Id}", true);
+        }
     }
 
 }

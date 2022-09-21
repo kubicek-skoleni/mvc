@@ -28,7 +28,6 @@ namespace Data.Model
 
         [Required]
         [EmailAddress]
-
         public string Email { get; set; }
 
         [DataType(DataType.Date)]
@@ -40,5 +39,10 @@ namespace Data.Model
         public virtual Addresses? Address { get; set; }
         [InverseProperty("Person")]
         public virtual ICollection<Contracts> Contracts { get; set; }
+
+        public int Age()
+        {
+            return DateTime.Now.Year - DateOfBirth.Year;
+        }
     }
 }
