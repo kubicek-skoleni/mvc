@@ -4,7 +4,7 @@
 @inject PersonsDbContext db
 @inject NavigationManager navigationManager
 
-@if(Person == null)
+@if (Person == null)
 {
     <div class="alert-danger">
         Nenašel jsem osobu s id @id
@@ -12,75 +12,73 @@
 }
 else
 {
-<div class="row">
-    <div class="col-md-4">
-        <EditForm Model="@Person" OnValidSubmit="@ValidSubmit" >
-            <DataAnnotationsValidator />
-            <ValidationSummary />
-            <div class="form-group">
-                <label class="control-label">
-                    Jméno:
-                    <InputText class="form-control" @bind-Value="Person.FirstName" />
-                </label>
-            </div>
-            <div class="form-group">
-                <label class="control-label">
-                    Příjmení:
-                    <InputText class="form-control" @bind-Value="Person.LastName" />
-                </label>
-            </div>
-             <div class="form-group">
-                <label class="control-label">
-                    Datum narození:
-                    <InputDate class="form-control" @bind-Value="Person.DateOfBirth" />
-                </label>
-            </div>
-            <div class="form-group">
-                <label class="control-label">
-                    Email:
-                    <InputText class="form-control" @bind-Value="Person.Email" />
-                </label>
-            </div>
-            
-            <hr/>
-            
-            <h4>Adresa</h4>
-            <div class="form-group">
-                <label class="control-label">
-                    Ulice:
-                    <InputText class="form-control" @bind-Value="Person.Address.Street" />
-                </label>
-            </div>
-            <div class="form-group">
-                <label class="control-label">
-                    Město:
-                    <InputText class="form-control" @bind-Value="Person.Address.City" />
-                </label>
-            </div>
-             <div class="form-group">
-                <label class="control-label">
-                    PSČ:
-                    <InputText class="form-control" @bind-Value="Person.Address.ZipCode" />
-                </label>
-            </div>
+    <div class="row">
+        <div class="col-md-4">
+            <EditForm Model="@Person" OnValidSubmit="@ValidSubmit">
+                <DataAnnotationsValidator />
+                <ValidationSummary />
+                <div class="form-group">
+                    <label class="control-label">
+                        Jméno:
+                        <InputText class="form-control" @bind-Value="Person.FirstName" />
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">
+                        Příjmení:
+                        <InputText class="form-control" @bind-Value="Person.LastName" />
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">
+                        Datum narození:
+                        <InputDate class="form-control" @bind-Value="Person.DateOfBirth" />
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">
+                        Email:
+                        <InputText class="form-control" @bind-Value="Person.Email" />
+                    </label>
+                </div>
 
-            <div class="form-group">
-                <input type="submit" value="Přidat" class="btn btn-primary" />
-            </div>
-        </EditForm>
+                <hr />
 
-        @foreach (var contract in Person.Contracts)
-        {
-            <div>@contract.Name - @contract.Number - @contract.Signed - @contract.IsActive <a class="text-danger danger">smazat</a></div>
-        }
+                <h4>Adresa</h4>
+                <div class="form-group">
+                    <label class="control-label">
+                        Ulice:
+                        <InputText class="form-control" @bind-Value="Person.Address.Street" />
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">
+                        Město:
+                        <InputText class="form-control" @bind-Value="Person.Address.City" />
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">
+                        PSČ:
+                        <InputText class="form-control" @bind-Value="Person.Address.ZipCode" />
+                    </label>
+                </div>
 
+                <div class="form-group">
+                    <input type="submit" value="Uložit změny" class="btn btn-primary" />
+                </div>
+            </EditForm>
+        </div>
     </div>
-</div>
+    @foreach (var contract in Person.Contracts)
+    {
+        <div class="border border-dark border-1 m-1 p-2">@contract.Name - @contract.Number - @contract.Signed - @contract.IsActive <a @onclick="() => DeleteContract(contract)" class="text-danger danger">smazat</a></div>
+    }
 }
 @code {
 
     [Parameter]
-    public int id {get;set;}
+    public int id { get; set; }
 
     public Persons Person = new Persons();
 
@@ -90,6 +88,14 @@ else
                 .Include(x => x.Address)
                 .Include(x => x.Contracts)
                 .FirstOrDefault(x => x.Id == id);
+
+        if (Person.Address == null)
+            Person.Address = new Addresses();
+    }
+
+    void DeleteContract(Contracts contract)
+    {
+        Person.Contracts.Remove(contract);
     }
 
     void ValidSubmit()
