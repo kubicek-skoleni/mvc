@@ -1,8 +1,17 @@
 ﻿@page "/person/edit/{id:int}"
+@using Microsoft.EntityFrameworkCore
 
 @inject PersonsDbContext db
 @inject NavigationManager navigationManager
 
+@if(Person == null)
+{
+    <div class="alert-danger">
+        Nenašel jsem osobu s id @id
+    </div>
+}
+else
+{
 <div class="row">
     <div class="col-md-4">
         <EditForm Model="@Person" OnValidSubmit="@ValidSubmit" >
@@ -61,7 +70,7 @@
         </EditForm>
     </div>
 </div>
-
+}
 @code {
 
     [Parameter]
@@ -71,7 +80,7 @@
 
     protected override void OnInitialized()
     {
-        Person = db.Persons.Find(id);
+        Person = db.Persons.Include(x => x.Address).FirstOrDefault(x => x.Id == id);
     }
 
     void ValidSubmit()
