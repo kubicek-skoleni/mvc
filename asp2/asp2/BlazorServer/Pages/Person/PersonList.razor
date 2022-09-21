@@ -61,14 +61,14 @@
 
     protected override void OnInitialized()
     {
-        Persons = db.Persons.Skip(900).Take(50).ToList();
+        Persons = db.Persons.Take(50).ToList();
 
-        personsCount = db.Persons.Count() - 900;
+        personsCount = db.Persons.Count();
     }
 
     void LoadNext()
     {
-        var toadd = db.Persons.Skip(900).Skip(last).Take(50).ToList();
+        var toadd = db.Persons.Skip(last).Take(50).ToList();
         Persons.AddRange(toadd);
         last += 50;
 
