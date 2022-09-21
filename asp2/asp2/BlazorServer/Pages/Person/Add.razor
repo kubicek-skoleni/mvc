@@ -13,46 +13,18 @@
 }
 
 <hr />
-<div class="row">
-    <div class="col-md-4">
-        <EditForm Model="@Person" OnSubmit="Submit" >
-            
-            <div class="form-group">
-                <label class="control-label">
-                    Jméno:
-                    <InputText class="form-control" @bind-Value="Person.FirstName" />
-                </label>
-            </div>
-            <div class="form-group">
-                <label class="control-label">
-                    Příjmení:
-                    <InputText class="form-control" @bind-Value="Person.LastName" />
-                </label>
-            </div>
-             <div class="form-group">
-                <label class="control-label">
-                    Datum narození:
-                    <InputDate class="form-control" @bind-Value="Person.DateOfBirth" />
-                </label>
-            </div>
-            <div class="form-group">
-                <label class="control-label">
-                    Email:
-                    <InputText class="form-control" @bind-Value="Person.Email" />
-                </label>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Přidat" class="btn btn-primary" />
-            </div>
-        </EditForm>
-    </div>
-</div>
 
+<BlazorServer.Components.PersonForm Person="Person" OnSubmitAction="ValidSubmit" />
 
 @code {
     string ErrorMsg = "";
 
-    Persons Person = new Persons(){DateOfBirth = DateTime.Today};
+    Persons Person = new Persons()
+    {
+        DateOfBirth = DateTime.Today, 
+        Address = new Addresses(), 
+        Contracts = new List<Contracts>()
+    };
 
     void ValidSubmit()
     {

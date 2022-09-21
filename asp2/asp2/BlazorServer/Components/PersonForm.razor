@@ -1,0 +1,68 @@
+﻿<div class="row">
+        <div class="col-md-4">
+            <EditForm Model="@Person" OnValidSubmit="@OnSubmitAction">
+                <DataAnnotationsValidator />
+                <ValidationSummary />
+                <div class="form-group">
+                    <label class="control-label">
+                        Jméno:
+                        <InputText class="form-control" @bind-Value="Person.FirstName" />
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">
+                        Příjmení:
+                        <InputText class="form-control" @bind-Value="Person.LastName" />
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">
+                        Datum narození:
+                        <InputDate class="form-control" @bind-Value="Person.DateOfBirth" />
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">
+                        Email:
+                        <InputText class="form-control" @bind-Value="Person.Email" />
+                    </label>
+                </div>
+
+                <hr />
+
+                <h4>Adresa</h4>
+                <div class="form-group">
+                    <label class="control-label">
+                        Ulice:
+                        <InputText class="form-control" @bind-Value="Person.Address.Street" />
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">
+                        Město:
+                        <InputText class="form-control" @bind-Value="Person.Address.City" />
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">
+                        PSČ:
+                        <InputText class="form-control" @bind-Value="Person.Address.ZipCode" />
+                    </label>
+                </div>
+
+                <div class="form-group">
+                    <input type="submit" value="Uložit změny" class="btn btn-primary" />
+                </div>
+            </EditForm>
+        </div>
+    </div>
+
+@code {
+
+    [Parameter]
+    public Persons Person { get; set; } = new Persons();
+
+    [Parameter]
+    public Action OnSubmitAction { get; set; }
+
+}
