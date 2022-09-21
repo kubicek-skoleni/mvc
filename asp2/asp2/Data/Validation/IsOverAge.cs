@@ -9,14 +9,26 @@ namespace Data.Validation
 {
     public class IsOverAge : ValidationAttribute
     {
-        public override bool IsValid(object? value)
+        //public override ValidationResult IsValid(object value)
+        //{
+        //    if (value is DateTime)
+        //    {
+        //        if (DateTime.Now.Year - ((DateTime)value).Year >= 18)
+        //            return ValidationResult.Success;
+        //    }
+
+        //    return new ValidationResult("Osoba není plnoletá");
+        //}
+
+        protected override ValidationResult? IsValid(object? value, ValidationContext validationContext)
         {
             if (value is DateTime)
             {
-                return DateTime.Now.Year - ((DateTime)value).Year >= 18;
+                if (DateTime.Now.Year - ((DateTime)value).Year >= 18)
+                    return ValidationResult.Success;
             }
 
-            return false;
+            return new ValidationResult("Osoba není plnoletá");
         }
     }
 }
