@@ -1,0 +1,50 @@
+﻿@page "/person/detail/{id:int}"
+@using Microsoft.EntityFrameworkCore
+
+@inject PersonsDbContext db
+
+<h3>Detail Osoby</h3>
+
+
+<div class="card card-body">
+    <p>@Person.FirstName</p>
+    <p>@Person.LastName</p>
+    <p>@Person.Email</p>
+    <p>@Person.DateOfBirth.ToShortDateString()</p>
+</div>
+
+<div class="card card-body">
+    <div class="card-title">
+        <h5>Adresa:</h5>
+    </div>
+    <p>@Person?.Address?.Street</p>
+    <p>@Person?.Address?.City</p>
+    <p>@Person?.Address?.ZipCode</p>
+</div>
+
+<div class="m-2">
+    <a class="btn-info btn" href="" >Přidat smlouvu..</a>
+</div>
+
+@foreach(var contract in Person?.Contracts)
+{
+    <div>@contract.Name - @contract.Number - @contract.Signed - @contract.IsActive <a class="text-danger danger">smazat</a></div>
+}
+
+@code {
+
+    [Parameter]
+    public int id { get; set; }
+
+    Persons? Person = new Persons();
+
+    protected override void OnInitialized()
+    {
+       Person =  db.Persons
+                    .Include(x => x.Contracts)
+                    .Include(x => x.Address)
+                        .Where(x => x.Id == id)
+                        .FirstOrDefault();
+    }
+
+}
