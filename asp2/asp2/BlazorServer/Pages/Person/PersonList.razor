@@ -10,48 +10,57 @@
     <a class="btn-info btn" href="/person/add">Nová..</a>
 </div>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th scope="col">#</th>
-            <th scope="col">Jméno</th>
-            <th scope="col">Příjmení</th>
-            <th scope="col">Email</th>
-            <th />
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var person in Persons)
-        {
-            <tr>
-                <td>
-                    @person.Id
-                </td>
-                <td>
-                    @person.FirstName
-                </td>
-                <td>
-                    @person.LastName
-                </td>
-                <td>
-                    @person.Email
-                </td>
-                <td>
-                    <a class="btn-info btn" href="/person/edit/@person.Id">Editovat</a>
-                    <a class="btn-info btn" href="/person/detail/@person.Id">Detail</a>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
-
-@if (showBtnNext)
+@if (Persons == null)
 {
-    <input type="button" value="Načti dalších 50" @onclick="LoadNext" class="btn btn-info" />
+    <div class="alert-info">
+        Načítám..
+    </div>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Jméno</th>
+                <th scope="col">Příjmení</th>
+                <th scope="col">Email</th>
+                <th />
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var person in Persons)
+            {
+                <tr>
+                    <td>
+                        @person.Id
+                    </td>
+                    <td>
+                        @person.FirstName
+                    </td>
+                    <td>
+                        @person.LastName
+                    </td>
+                    <td>
+                        @person.Email
+                    </td>
+                    <td>
+                        <a class="btn-info btn" href="/person/edit/@person.Id">Editovat</a>
+                        <a class="btn-info btn" href="/person/detail/@person.Id">Detail</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    @if (showBtnNext)
+    {
+        <input type="button" value="Načti dalších 50" @onclick="LoadNext" class="btn btn-info" />
+    }
 }
 
 @code {
-    List<Persons> Persons = new List<Persons>();
+    List<Persons> Persons = null;
 
     int last = 50;
 
@@ -61,10 +70,20 @@
 
     protected override void OnInitialized()
     {
-        Persons = db.Persons.Take(50).ToList();
 
-        personsCount = db.Persons.Count();
     }
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        if (firstRender)
+        {
+            Persons = db.Persons.Take(50).ToList();
+            personsCount = db.Persons.Count();
+        }
+
+        StateHasChanged();
+    }
+
 
     void LoadNext()
     {
@@ -72,7 +91,7 @@
         Persons.AddRange(toadd);
         last += 50;
 
-        if(last > personsCount)
+        if (last > personsCount)
         {
             showBtnNext = false;
         }
