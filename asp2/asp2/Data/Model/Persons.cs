@@ -20,10 +20,10 @@ namespace Data.Model
 
         [Key]
         public int Id { get; set; }
-        [Required]
+        [Required(ErrorMessage ="Jméno je vyžadováno")]
         [StringLength(100)]
         public string FirstName { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Příjmení je vyžadováno")]
         [StringLength(100)]
         public string LastName { get; set; }
 
