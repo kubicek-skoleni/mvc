@@ -45,13 +45,36 @@
     </tbody>
 </table>
 
-
+@if (showBtnNext)
+{
+    <input type="button" value="Načti dalších 50" @onclick="LoadNext" class="btn btn-info" />
+}
 
 @code {
     List<Persons> Persons = new List<Persons>();
 
+    int last = 50;
+
+    int personsCount = 0;
+
+    bool showBtnNext = true;
+
     protected override void OnInitialized()
     {
-        Persons = db.Persons.Take(50).ToList();
+        Persons = db.Persons.Skip(900).Take(50).ToList();
+
+        personsCount = db.Persons.Count() - 900;
+    }
+
+    void LoadNext()
+    {
+        var toadd = db.Persons.Skip(900).Skip(last).Take(50).ToList();
+        Persons.AddRange(toadd);
+        last += 50;
+
+        if(last > personsCount)
+        {
+            showBtnNext = false;
+        }
     }
 }
