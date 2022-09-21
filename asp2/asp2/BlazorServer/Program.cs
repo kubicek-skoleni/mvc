@@ -1,3 +1,4 @@
+using Data;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 
@@ -5,8 +6,9 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
-
 builder.Services.AddServerSideBlazor();
+
+builder.Services.AddDbContext<PersonsDbContext>();
 
 var app = builder.Build();
 
