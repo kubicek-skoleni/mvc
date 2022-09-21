@@ -32,6 +32,29 @@
                     <InputText class="form-control" @bind-Value="Person.Email" />
                 </label>
             </div>
+            
+            <hr/>
+            
+            <h4>Adresa</h4>
+            <div class="form-group">
+                <label class="control-label">
+                    Ulice:
+                    <InputText class="form-control" @bind-Value="Person.Address.Street" />
+                </label>
+            </div>
+            <div class="form-group">
+                <label class="control-label">
+                    Město:
+                    <InputText class="form-control" @bind-Value="Person.Address.City" />
+                </label>
+            </div>
+             <div class="form-group">
+                <label class="control-label">
+                    PSČ:
+                    <InputText class="form-control" @bind-Value="Person.Address.ZipCode" />
+                </label>
+            </div>
+
             <div class="form-group">
                 <input type="submit" value="Přidat" class="btn btn-primary" />
             </div>
