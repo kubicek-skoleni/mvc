@@ -19,14 +19,31 @@
             
             <div class="form-group">
                 <label class="control-label">
-                    Identifier:
+                    Jméno:
                     <InputText @bind-Value="Person.FirstName" />
                 </label>
             </div>
 
+            <div class="form-group">
+                <label class="control-label">
+                    Příjmení:
+                    <InputText @bind-Value="Person.LastName" />
+                </label>
+            </div>
 
+             <div class="form-group">
+                <label class="control-label">
+                    Datum narození:
+                    <InputDate @bind-Value="Person.DateOfBirth" />
+                </label>
+            </div>
 
-
+            <div class="form-group">
+                <label class="control-label">
+                    Email:
+                    <InputText @bind-Value="Person.Email" />
+                </label>
+            </div>
 
 
             <div class="form-group">
