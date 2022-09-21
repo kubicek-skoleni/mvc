@@ -50,7 +50,6 @@
 </div>
 
 
-
 @code {
     Persons Person = new Persons(){DateOfBirth = DateTime.Today};
 
@@ -58,7 +57,6 @@
     {
         db.Persons.Add(Person);
         db.SaveChanges();
-
         navigationManager.NavigateTo($"/person/detail/{Person.Id}", true);
     }
 
