@@ -1,5 +1,6 @@
 ﻿@page "/person/list"
 @using Data.Model
+@using Microsoft.EntityFrameworkCore
 
 @inject PersonsDbContext db
 
@@ -73,11 +74,11 @@ else
 
     }
 
-    protected override void OnAfterRender(bool firstRender)
+    protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (firstRender)
         {
-            Persons = db.Persons.Take(50).ToList();
+            Persons = await db.Persons.Take(50).ToListAsync();
             personsCount = db.Persons.Count();
         }
 
