@@ -1,6 +1,7 @@
 ﻿@page "/person/add"
 
 @inject PersonsDbContext db
+@inject NavigationManager navigationManager
 
 <h3>Přidej novou osobu</h3>
 
@@ -51,11 +52,14 @@
 
 
 @code {
-    Persons Person = new Persons();
+    Persons Person = new Persons(){DateOfBirth = DateTime.Today};
 
     void ValidSubmit()
     {
-        
+        db.Persons.Add(Person);
+        db.SaveChanges();
+
+        navigationManager.NavigateTo($"/person/detail/{Person.Id}", true);
     }
 
 }

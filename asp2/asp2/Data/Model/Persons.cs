@@ -25,8 +25,13 @@ namespace Data.Model
         [Required]
         [StringLength(100)]
         public string LastName { get; set; }
+
         [Required]
+        [EmailAddress]
+
         public string Email { get; set; }
+
+        [DataType(DataType.Date)]
         public DateTime DateOfBirth { get; set; }
         public int? AddressId { get; set; }
 
