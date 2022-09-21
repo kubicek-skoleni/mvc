@@ -14,48 +14,40 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-
         <EditForm Model="@Person" OnValidSubmit="@ValidSubmit" >
             <DataAnnotationsValidator />
             <ValidationSummary />
             <div class="form-group">
                 <label class="control-label">
                     Jméno:
-                    <InputText @bind-Value="Person.FirstName" />
+                    <InputText class="form-control" @bind-Value="Person.FirstName" />
                 </label>
             </div>
             <div class="form-group">
                 <label class="control-label">
                     Příjmení:
-                    <InputText @bind-Value="Person.LastName" />
+                    <InputText class="form-control" @bind-Value="Person.LastName" />
                 </label>
             </div>
              <div class="form-group">
                 <label class="control-label">
                     Datum narození:
-                    <InputDate @bind-Value="Person.DateOfBirth" />
+                    <InputDate class="form-control" @bind-Value="Person.DateOfBirth" />
                 </label>
             </div>
             <div class="form-group">
                 <label class="control-label">
                     Email:
-                    <InputText @bind-Value="Person.Email" />
+                    <InputText class="form-control" @bind-Value="Person.Email" />
                 </label>
             </div>
             <div class="form-group">
                 <input type="submit" value="Přidat" class="btn btn-primary" />
             </div>
-        
         </EditForm>
-
-       
-            
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
 
 
 @code {
