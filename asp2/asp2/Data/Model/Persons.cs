@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Data.Validation;
 using Microsoft.EntityFrameworkCore;
 
 namespace Data.Model
@@ -31,6 +32,7 @@ namespace Data.Model
         public string Email { get; set; }
 
         [DataType(DataType.Date)]
+        [IsOverAge]
         public DateTime DateOfBirth { get; set; }
         public int? AddressId { get; set; }
 
